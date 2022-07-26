@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distributed-tracing-sender
+spec:
+  selector:
+    matchLabels:
+      app: distributed-tracing-sender
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: distributed-tracing-sender
+    spec:
+      # nodeSelector:
+      #   "beta.kubernetes.io/os": linux
+      containers:
+      - name: distributed-tracing-sender
+        image: docker.io/yogiman/distributed-tracing-sender
+        ports:
+        - containerPort: 8080
+        env:
+          - name: AZURE_SERVICEBUS_NAMESPACE_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: service-bus-secrets
+                key: connection-string
+          - name: AZURE_SERVICEBUS_SAMPLE_TOPIC_NAME
+            valueFrom:
+              secretKeyRef:
+                name: service-bus-secrets
+                key: topic-name
+          - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: application-insights-secrets
+                key: instrumentation-key
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: distributed-tracing-sender
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: distributed-tracing-sender
