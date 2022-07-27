@@ -27,11 +27,11 @@ jobs:
         uses: gradle/gradle-build-action@v2
       
       - name: Execute Gradle build
-        run: ./gradlew build
-      
-      - name: List files in the repository
         run: |
-          ls ${{ github.workspace }}
+          ./gradlew build
+
+          echo "list build result"
+          ls ./build/libs/
 
       # - name: Azure Login
       #   uses: azure/login@v1
