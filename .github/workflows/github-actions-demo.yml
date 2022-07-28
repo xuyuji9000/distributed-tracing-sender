@@ -38,11 +38,11 @@ jobs:
           echo "list build result"
           ls ./build/libs/
 
-      - uses: azure/docker-login@v1
-        with:
-          login-server: index.docker.io
-          username: ${{ secrets.REGISTRY_USERNAME }} 
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+      # - uses: azure/docker-login@v1
+      #   with:
+      #     login-server: index.docker.io
+      #     username: ${{ secrets.REGISTRY_USERNAME }} 
+      #     password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Build and Push Container Image
         run: |
@@ -50,6 +50,10 @@ jobs:
           
           echo "Building..."
           docker build . -t docker.io/yogiman/distributed-tracing-sender
+
+          docker login \
+          --username ${{ secrets.REGISTRY_USERNAME }} \
+          --password ${{ secrets.REGISTRY_PASSWORD }}
 
           echo "Pushing..."
           docker push docker.io/yogiman/distributed-tracing-sender
