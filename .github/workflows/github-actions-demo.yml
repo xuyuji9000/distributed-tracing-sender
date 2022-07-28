@@ -63,3 +63,4 @@ jobs:
           azcliversion: 2.38.0
           inlineScript: |
             az --version
+            az account list
