@@ -38,11 +38,18 @@ jobs:
           echo "list build result"
           ls ./build/libs/
 
-      - name: Build Container Image
+      - uses: azure/docker-login@v1
+        with:
+          login-server: index.docker.io
+          username: ${{ secrets.REGISTRY_USERNAME }} 
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build and Push Container Image
         run: |
           docker --version
           
           docker build . -t docker.io/yogiman/distributed-tracing-sender
+          docker push . -t docker.io/yogiman/distributed-tracing-sender
 
       # - name: Azure Login
       #   uses: azure/login@v1
