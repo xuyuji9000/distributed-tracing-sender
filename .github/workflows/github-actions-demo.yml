@@ -49,7 +49,7 @@ jobs:
           docker --version
           
           docker build . -t docker.io/yogiman/distributed-tracing-sender
-          docker push . -t docker.io/yogiman/distributed-tracing-sender
+          docker push docker.io/yogiman/distributed-tracing-sender
 
       # - name: Azure Login
       #   uses: azure/login@v1
