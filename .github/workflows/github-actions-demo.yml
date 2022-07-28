@@ -48,7 +48,10 @@ jobs:
         run: |
           docker --version
           
+          echo "Building..."
           docker build . -t docker.io/yogiman/distributed-tracing-sender
+
+          echo "Pushing..."
           docker push docker.io/yogiman/distributed-tracing-sender
 
       # - name: Azure Login
