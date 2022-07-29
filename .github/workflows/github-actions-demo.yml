@@ -43,14 +43,14 @@ jobs:
           docker --version
           
           echo "Building..."
-          docker build . -t docker.io/yogiman/distributed-tracing-sender
+          docker build . -t docker.io/yogiman/distributed-tracing-sender:${{ github.sha }}
 
           docker login \
           --username ${{ secrets.REGISTRY_USERNAME }} \
           --password ${{ secrets.REGISTRY_PASSWORD }}
 
           echo "Pushing..."
-          docker push docker.io/yogiman/distributed-tracing-sender
+          docker push docker.io/yogiman/distributed-tracing-sender:${{ github.sha }}
 
       - name: Azure Login
         uses: azure/login@v1
