@@ -64,3 +64,14 @@ jobs:
           inlineScript: |
             az --version
             az account list
+
+      # Set the target Azure Kubernetes Service (AKS) cluster. 
+      - uses: azure/aks-set-context@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          cluster-name: 'testkx'
+          resource-group: 'POC-Distributed-Tracing'
+
+      - name: List Kubernetes Context
+        run: |
+          kubectl config get-contexts
