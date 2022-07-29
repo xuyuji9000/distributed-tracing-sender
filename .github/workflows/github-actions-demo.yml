@@ -82,3 +82,5 @@ jobs:
           strategy: basic
           manifests: |
             k8s/service.yaml
+          images: |
+            docker.io/yogiman/distributed-tracing-sender:${{ github.sha }}
